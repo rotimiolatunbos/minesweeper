@@ -12,6 +12,7 @@ function createBoard(level) {
 		[0, -1], [0, 1], [1, -1], 
 		[1, 0], [1, 1]
 	];
+	var boardInString = '';
 
 	var row = dimensions[level][0];
 	var col = dimensions[level][1];
@@ -30,10 +31,10 @@ function createBoard(level) {
 		var r = Math.random();
 		var i = Math.floor(((indices.length-1)*r));
 
-		var row = indices[i][0];
-		var col = indices[i][1];
+		var ro = indices[i][0];
+		var co = indices[i][1];
 
-		board[row][col] = -1;
+		board[ro][co] = -1;
 
 		indices = indices.filter(function (item, index, arr) {
 			return arr.indexOf(item) != i;
@@ -46,28 +47,46 @@ function createBoard(level) {
 		for (var j=0; j<col; j++) {
 			var mines_around = 0;
 
-			neighbors.forEach(function (n) {
-				var rw = n[0]+i;
-				var cl = n[1]+j;
+			if (board[i][j] != -1) {
+				neighbors.forEach(function (n) {
+					var rw = n[0]+i;
+					var cl = n[1]+j;
 
-				var isValidRow = 0 <= rw && rw <= row;
-				var isValidCol = 0 <= cl && cl <= col;
+					var isValidRow = 0 <= rw && rw < row;
+					var isValidCol = 0 <= cl && cl < col;
 
-				if (isValidRow && isValidCol) {
-					if (board[rw][cl] == -1) {
-						mines_around += 1
+					if (isValidRow && isValidCol) {
+						// console.log(`${rw} ${cl}`)
+						if (board[rw][cl] == -1) {
+							// console.log(board[rw][cl])
+							mines_around += 1
+						}
 					}
-				}
-			})
+				})
+			}
+
+			//console.log(mines_around)
 
 			if (mines_around > 0) {
+				// console.log(mines_around)
 				board[i][j] = mines_around
+				// console.log(mines_around)
 			}
 		}
 	}
 
-	return board;
+	board.forEach(function (rw, ind, arr) {
+		rw.forEach(function (cl, id, ar) {
+			if (id == (arr.length-1)) {
+				boardInString += `\t${cl}\n`;
+			} else {
+				boardInString += `\t${cl}`;
+			}
+		})
+	})
+
+	return boardInString;
 }
 
 
-console.log(createBoard('easy'))
+console.log(createBoard('medium'))
