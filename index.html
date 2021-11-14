@@ -10,5 +10,33 @@
 </head>
 <body>
 	<p>Minesweeper game would go here</p>
+
+	<div id="mines-left"></div>
+	<div id="timer"></div>
+	<div id="board"></div>
+	
+	<script>
+		var board = document.querySelector('#board');
+		
+		board.style.display = 'grid';
+		board.style.gridTemplateColumns = 'repeat(8, 30px)';
+		board.style.gridTemplateRows = 'repeat(8, 30px)';
+
+		var model = createBoard('easy');
+
+		for (var i=0; i<8; i++) {
+			for (var j=0; j<8; j++) {
+				var span = document.createElement('span');
+
+				span.style.gridRowStart = i+1;
+				span.style.gridColumnStart = j+1;
+
+				span.innerText = model[i][j];
+
+				board.appendChild(span);
+			}
+		}
+
+	</script>
 </body>
 </html>
