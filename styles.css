@@ -1,3 +1,50 @@
 body {
-	/*background-color: blue;*/
+	margin: 0;
 }
+
+@font-face {
+	font-family: 'Omicron';
+	src: url(assets/fonts/omicron.ttf) format('truetype');
+}
+
+@font-face {
+	font-family: 'Computer';
+	src: url(assets/fonts/DS-DIGI.ttf) format('truetype');
+}
+
+@font-face {
+	font-family: 'Consolas';
+	src: url(assets/fonts/consolas.ttf) format('truetype');
+}
+
+#main {
+	width: 800px;
+	margin: 0 auto;
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+}
+
+#mines-left {
+	font-family: 'Computer', sans serif;
+	font-size: 70px;
+}
+
+#board {
+	flex: 1;
+	display: grid;
+	justify-items: center;
+	align-items: center;
+	justify-content: center;
+	align-content: center;
+	grid-gap: 1px;
+}
+
+#title {
+	font-family: 'Omicron', sans serif;
+	font-size: 48px;
+	text-align: center;
+}
+
+
+
