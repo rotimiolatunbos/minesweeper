@@ -9,34 +9,77 @@
 	<script type="text/javascript" src="scripts.js"></script>
 </head>
 <body>
-	<p>Minesweeper game would go here</p>
+	<!-- <p>Minesweeper game would go here</p> -->
 
-	<div id="mines-left"></div>
-	<div id="timer"></div>
-	<div id="board"></div>
+	<div id="main">
+		<header>
+			<h1 id="title">minesweeper</h1>
+		</header>
+
+		<div id="menu">
+			<div id="game-level">
+				<label>
+					<input type="radio" name="gameLevel" value="easy" checked>easy
+				</label>
+			
+				<label>
+					<input type="radio" name="gameLevel" value="medium">medium
+				</label>
+
+				<label>
+					<input type="radio" name="gameLevel" value="hard">hard
+				</label>
+			</div>
+			<div id="mines-left">90</div>
+			<div id="timer"></div>
+		</div>
+
+		<div id="board"></div>
+	</div>
 	
 	<script>
-		var board = document.querySelector('#board');
-		
-		board.style.display = 'grid';
-		board.style.gridTemplateColumns = 'repeat(8, 30px)';
-		board.style.gridTemplateRows = 'repeat(8, 30px)';
+		(function () {
+			var board = document.querySelector('#board');
 
-		var model = createBoard('easy');
+			var levels = document.querySelectorAll('input[name="gameLevel"]');
 
-		for (var i=0; i<8; i++) {
-			for (var j=0; j<8; j++) {
-				var span = document.createElement('span');
+			for (let node of levels) {
+				if (node.checked) {
+					createBoard(node.value);
+				}
 
-				span.style.gridRowStart = i+1;
-				span.style.gridColumnStart = j+1;
-
-				span.innerText = model[i][j];
-
-				board.appendChild(span);
+				node.onchange = function (event) {
+					if (event.target.checked) {
+						createBoard(event.target.value);
+					}
+				}
 			}
-		}
 
+			function createBoard(lvl) {
+				minesweeper.newGame(lvl);
+
+				board.innerHTML = '';
+
+				board.style.gridTemplateColumns = `repeat(${minesweeper.columns}, 25px)`;
+				board.style.gridTemplateRows = `repeat(${minesweeper.rows}, 25px)`;
+
+				for (var i=0; i<minesweeper.rows; i++) {
+					for (var j=0; j<minesweeper.columns; j++) {
+						var span = document.createElement('span');
+
+						span.setAttribute('id', '');
+
+						span.style.gridRowStart = i+1;
+						span.style.gridColumnStart = j+1;
+						span.style.fontFamily = 'Consolas';
+
+						span.innerText = minesweeper.getCell(i, j)
+
+						board.appendChild(span);
+					}
+				}
+			}
+		})()	
 	</script>
 </body>
 </html>
