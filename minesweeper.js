@@ -1,92 +1,108 @@
 
 
-var num_mines = {'easy': 10, 'medium': 40, 'hard': 99};
-var dimensions = {'easy': [8, 8], 'medium': [16, 16], 'hard': [16, 30]};
+/*
+ *
+ *	Things to implement
+ *	1. A minesweeper object that has the following properties / methods
+ * 		a. a method to create a new board given the game level as a parameter
+ *		b. a method to get the item at a specified row and column
+ *		c. a property showing the number of rows in the board
+ * 		d. a property showing the number of columns in the board
+ *		
+ *
+ */
 
-function createBoard(level) {
-	var board = [];
-	var indices = [];
-	var mines_found = 0;
-	var neighbors = [
+ const minesweeper = (function (obj) {
+ 	const NUM_MINES = {'easy': 10, 'medium': 40, 'hard': 99};
+ 	const DIMENSIONS = {'easy': [8, 8], 'medium': [16, 16], 'hard': [16, 30]};
+ 	const NEIGHBORS = [
 		[-1, -1], [-1, 0], [-1, 1],
 		[0, -1], [0, 1], [1, -1], 
 		[1, 0], [1, 1]
 	];
-	var boardInString = '';
 
-	var row = dimensions[level][0];
-	var col = dimensions[level][1];
-	var mines = num_mines[level];
 
-	for (var i=0; i<row; i++) {
-		var c = []
-		for (var j=0; j<col; j++) {
-			c.push(0);
-			indices.push([i, j])
+	obj.board = null;
+	obj.mines = null;
+	obj.rows = null;
+	obj.columns = null;
+	obj.mineCells = null;
+	obj.emptyCells = null;
+
+
+ 	obj.newGame = function (level) {
+ 		obj.board = [];
+ 		obj.mineCells = [];
+ 		obj.emptyCells = [];
+ 		obj.rows = DIMENSIONS[level][0];
+		obj.columns = DIMENSIONS[level][1];
+		obj.mines = NUM_MINES[level];
+
+		let indices = [];
+		let mines_found = 0;
+
+		for (let i=0; i<obj.rows; i++) {
+			let c = [];
+			for (let j=0; j<obj.columns; j++) {
+				c.push(0);
+				indices.push([i, j])
+			}
+			obj.board.push(c);
 		}
-		board.push(c);
-	}
 
-	while (mines_found < mines) {
-		var r = Math.random();
-		var i = Math.floor(((indices.length-1)*r));
+		while (mines_found < obj.mines) {
+			const r = Math.random();
+			const i = Math.floor(((indices.length-1)*r));
 
-		var ro = indices[i][0];
-		var co = indices[i][1];
+			const ro = indices[i][0];
+			const co = indices[i][1];
 
-		board[ro][co] = -1;
+			obj.board[ro][co] = -1;
+			obj.mineCells.push(indices[i]);
 
-		indices = indices.filter(function (item, index, arr) {
-			return arr.indexOf(item) != i;
-		});
+			indices = indices.filter(function (item, index, arr) {
+				return arr.indexOf(item) != i;
+			});
 
-		mines_found += 1;
-	}
+			mines_found += 1;
+		}
 
-	for (var i=0; i<row; i++) {
-		for (var j=0; j<col; j++) {
-			var mines_around = 0;
+		for (let i=0; i<obj.rows; i++) {
+			for (let j=0; j<obj.columns; j++) {
+				var mines_around = 0;
 
-			if (board[i][j] != -1) {
-				neighbors.forEach(function (n) {
-					var rw = n[0]+i;
-					var cl = n[1]+j;
+				if (obj.board[i][j] != -1) {
+					NEIGHBORS.forEach(function (n) {
+						let rw = n[0]+i;
+						let cl = n[1]+j;
 
-					var isValidRow = 0 <= rw && rw < row;
-					var isValidCol = 0 <= cl && cl < col;
+						var isValidRow = 0 <= rw && rw < obj.rows;
+						var isValidCol = 0 <= cl && cl < obj.columns;
 
-					if (isValidRow && isValidCol) {
-						// console.log(`${rw} ${cl}`)
-						if (board[rw][cl] == -1) {
-							// console.log(board[rw][cl])
-							mines_around += 1
+						if (isValidRow && isValidCol) {
+							if (obj.board[rw][cl] == -1) {
+								mines_around += 1
+							}
 						}
-					}
-				})
-			}
+					})
+				}
 
-			//console.log(mines_around)
-
-			if (mines_around > 0) {
-				// console.log(mines_around)
-				board[i][j] = mines_around
-				// console.log(mines_around)
+				if (mines_around > 0) {
+					obj.board[i][j] = mines_around
+				} else {
+					obj.emptyCells.push([i, j])
+				}
 			}
 		}
-	}
+ 	}
 
-	board.forEach(function (rw, ind, arr) {
-		rw.forEach(function (cl, id, ar) {
-			if (id == (arr.length-1)) {
-				boardInString += `\t${cl}\n`;
-			} else {
-				boardInString += `\t${cl}`;
-			}
-		})
-	})
+ 	obj.getCell = function (row, col) {
+ 		if (obj.board != [] || obj.board != null) {
+ 			return obj.board[row][col];
+ 		}
 
-	return boardInString;
-}
+ 		return null;
+ 	}
 
-
-console.log(createBoard('medium'))
+ 	return obj;
+ })({})
