@@ -25,7 +25,16 @@ body {
 	height: 100vh;
 }
 
-#mines-left {
+#game-level {
+	display: inline-block;
+}
+
+#mines-left, #timer {
+	display: inline-block;
+	margin: 0 0 0 12px;
+}
+
+#mines-left .value, #timer .value {
 	font-family: 'Computer', sans serif;
 	font-size: 70px;
 }
@@ -40,11 +49,14 @@ body {
 	grid-gap: 1px;
 }
 
-#title {
-	font-family: 'Omicron', sans serif;
-	font-size: 48px;
-	text-align: center;
+.left-side {
+	float: left;
 }
+
+.right-side {
+	float: right;
+}
+
 
 
 

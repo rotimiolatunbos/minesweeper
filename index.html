@@ -12,28 +12,42 @@
 	<!-- <p>Minesweeper game would go here</p> -->
 
 	<div id="main">
-		<header>
-			<h1 id="title">minesweeper</h1>
-		</header>
-
 		<div id="menu">
-			<div id="game-level">
-				<label>
-					<input type="radio" name="gameLevel" value="easy" checked>easy
-				</label>
-			
-				<label>
-					<input type="radio" name="gameLevel" value="medium">medium
-				</label>
 
-				<label>
-					<input type="radio" name="gameLevel" value="hard">hard
-				</label>
+			<div class="left-side">
+				<button id="burst">burst</button>
+				<button id="new-game">new game</button>
 			</div>
-			<div id="mines-left">90</div>
-			<div id="timer"></div>
-		</div>
 
+
+			<div class="right-side">
+				<div id="game-level">
+					<span class="label">level</span><br />
+					
+					<label>
+						<input type="radio" name="gameLevel" value="easy" checked>easy
+					</label>
+				
+					<label>
+						<input type="radio" name="gameLevel" value="medium">medium
+					</label>
+
+					<label>
+						<input type="radio" name="gameLevel" value="hard">hard
+					</label>
+				</div>
+
+				<div id="mines-left">
+					<span class="label">mines left</span><br />
+					<span class="value">88</span>
+				</div>
+
+				<div id="timer">
+					<span class="label">time</span><br />
+					<span class="value">88</span>
+				</div>
+			</div>
+		</div>
 		<div id="board"></div>
 	</div>
 	
