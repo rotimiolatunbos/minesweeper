@@ -1,5 +1,6 @@
 body {
 	margin: 0;
+	background-color: #dcd6bc;
 }
 
 @font-face {
@@ -29,12 +30,12 @@ body {
 	display: inline-block;
 }
 
-#mines-left, #timer {
+#mines, #flagged-cells, #timer {
 	display: inline-block;
 	margin: 0 0 0 12px;
 }
 
-#mines-left .value, #timer .value {
+#mines .value, #flagged-cells .value, #timer .value {
 	font-family: 'Computer', sans serif;
 	font-size: 70px;
 }

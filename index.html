@@ -6,7 +6,6 @@
 	<link rel="stylesheet" type="text/css" href="styles.css">
 
 	<script type="text/javascript" src="minesweeper.js"></script>
-	<script type="text/javascript" src="scripts.js"></script>
 </head>
 <body>
 	<!-- <p>Minesweeper game would go here</p> -->
@@ -37,14 +36,19 @@
 					</label>
 				</div>
 
-				<div id="mines-left">
-					<span class="label">mines left</span><br />
-					<span class="value">88</span>
+				<div id="mines">
+					<span class="label">mines</span><br />
+					<span class="value"></span>
+				</div>
+
+				<div id="flagged-cells">
+					<span class="label">flagged cells</span><br />
+					<span class="value"></span>
 				</div>
 
 				<div id="timer">
 					<span class="label">time</span><br />
-					<span class="value">88</span>
+					<span class="value"></span>
 				</div>
 			</div>
 		</div>
@@ -52,185 +56,6 @@
 		<div id="board"></div>
 	</div>
 	
-	<script>
-		(function () {
-			var board = document.querySelector('#board');
-
-			var levels = document.querySelectorAll('input[name="gameLevel"]');
-
-			for (let node of levels) {
-				if (node.checked) {
-					createBoard(node.value);
-				}
-
-				node.onchange = function (event) {
-					if (event.target.checked) {
-						createBoard(event.target.value);
-					}
-				}
-			}
-
-			function newBomb() {
-				const bomb = document.createElement('img');
-
-				bomb.src = 'assets/images/bomb.png';
-
-				bomb.style.height = '18px';
-				bomb.style.width = '18px';
-
-				return bomb;
-			}
-
-			function toggleFlag(cellElem) {
-				if (cellElem.className == 'covered') {
-					cellElem.className = 'flagged';
-				} else if (cellElem.className == 'flagged') {
-					cellElem.className = 'covered';
-				}
-			}
-
-			function revealCell(cellElem) {
-				const value = parseInt(cellElem.dataset.cellValue);
-
-				if (value > 0) {
-					cellElem.innerText = value;
-				} else if (value == -1) {
-					const bomb = newBomb();
-					cellElem.appendChild(bomb);
-				}
-
-				cellElem.setAttribute('class', 'revealed');
-			}
-
-			// function checkNeighboringCells(row, col): {
-			// 	const NEIGHBORS = [
-			// 		[-1, -1], [-1, 0], [-1, 1],
-			// 		[0, -1], [0, 1], [1, -1], 
-			// 		[1, 0], [1, 1]
-			// 	];
-
-			// 	NEIGHBORS.forEach(function (n) {
-			// 		const rw = row+n[0];
-			// 		const cl = col+n[1];
-
-			// 		const validRow = 0 <= rw && rw < minesweeper.rows;
-			// 		const validCol = 0 <= cl && cl < minesweeper.columns;
-
-			// 		if (validRow && validCol) {
-			// 			const el = document.querySelector(`span[data-cell-index="${rw},${cl}"]`);
-			// 			console.log(el)
-			// 			if (el.className == 'covered') {
-			// 				revealCell(el);
-			// 				if (el.dataset.cellValue == 0) {
-			// 					revealEmptyCells(el);
-			// 				}
-			// 			}
-			// 		}
-			// 	})
-			// }
-
-			function revealEmptyCells(cellElem) {
-				const NEIGHBORS = [
-					[-1, -1], [-1, 0], [-1, 1],
-					[0, -1], [0, 1], [1, -1], 
-					[1, 0], [1, 1]
-				];
-				
-				const index = cellElem.dataset.cellIndex.split(',');
-				const cellsToCheck = [index,];
-
-				while (cellsToCheck.length != 0) {
-					const i = cellsToCheck.shift();
-					const em = getElementFromIndex(i);
-
-					revealCell(em);
-
-					NEIGHBORS.forEach(function (n) {
-						const ro = parseInt(i[0])+n[0];
-						const co = parseInt(i[1])+n[1];
-
-						const validRow = 0 <= ro && ro < minesweeper.rows;
-						const validCol = 0 <= co && co < minesweeper.columns;
-
-						if (validRow && validCol) {
-							const el = getElementFromIndex([ro, co]);
-							if (el.className == 'covered') {
-								const val = getCellValueFromElement(el);
-
-								if (val > 0 || val == -1) {
-									revealCell(el);
-								} else {
-									cellsToCheck.push([ro, co]);
-								}
-							}
-						}		
-					})
-				}
-			}
-
-			function revealAllCells() {
-				return;
-			}
-
-			function getCellValueFromElement(elem) {
-				return parseInt(elem.dataset.cellValue);
-			}
-
-			function getElementFromIndex(index) {
-				const [row, col] = index;
-				return document.getElementById(`c${row}-${col}`);
-			}
-
-			function createCell(row, col) {
-				const cellValue = minesweeper.getCell(row, col);
-				const cell = document.createElement('span');
-
-				cell.setAttribute('id', `c${row}-${col}`);
-				cell.setAttribute('class', 'covered');
-				cell.setAttribute('data-cell-value', cellValue);
-				cell.setAttribute('data-cell-index', `${row},${col}`);
-
-				cell.style.gridRowStart = row+1;
-				cell.style.gridColumnStart = col+1;
-
-				return cell;
-			}
-
-			function createBoard(lvl) {
-				minesweeper.newGame(lvl);
-
-				board.innerHTML = '';
-
-				board.style.gridTemplateColumns = `repeat(${minesweeper.columns}, 30px)`;
-				board.style.gridTemplateRows = `repeat(${minesweeper.rows}, 30px)`;
-
-				for (var i=0; i<minesweeper.rows; i++) {
-					for (var j=0; j<minesweeper.columns; j++) {
-						const cell = createCell(i, j);
-
-						cell.onclick = function (event) {
-							event.preventDefault();
-
-							if (event.target.className == 'covered') {
-								if (parseInt(event.target.dataset.cellValue) == 0) {
-									revealEmptyCells(event.target)
-								} else {
-									revealCell(event.target);	
-								}	
-							}	
-						}
-
-						cell.oncontextmenu = function (event) {
-							event.preventDefault();
-
-							toggleFlag(event.target);
-						}
-						
-						board.appendChild(cell);
-					}
-				}
-			}
-		})()	
-	</script>
+	<script type="text/javascript" src="script.js"></script>
 </body>
 </html>

@@ -1,16 +1,4 @@
-
-
-/*
- *
- *	Things to implement
- *	1. A minesweeper object that has the following properties / methods
- * 		a. a method to create a new board given the game level as a parameter
- *		b. a method to get the item at a specified row and column
- *		c. a property showing the number of rows in the board
- * 		d. a property showing the number of columns in the board
- *		
- *
- */
+ 
 
  const minesweeper = (function (obj) {
  	const NUM_MINES = {'easy': 10, 'medium': 40, 'hard': 99};
@@ -28,12 +16,14 @@
 	obj.columns = null;
 	obj.mineCells = null;
 	obj.emptyCells = null;
+	obj.level = null;
 
 
  	obj.newGame = function (level) {
  		obj.board = [];
  		obj.mineCells = [];
  		obj.emptyCells = [];
+ 		obj.level = level;
  		obj.rows = DIMENSIONS[level][0];
 		obj.columns = DIMENSIONS[level][1];
 		obj.mines = NUM_MINES[level];
@@ -90,7 +80,9 @@
 				if (mines_around > 0) {
 					obj.board[i][j] = mines_around
 				} else {
-					obj.emptyCells.push([i, j])
+					if (obj.board[i][j] == 0) {
+						obj.emptyCells.push([i, j]);
+					}		
 				}
 			}
 		}
