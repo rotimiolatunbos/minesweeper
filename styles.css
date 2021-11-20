@@ -4,11 +4,6 @@ body {
 }
 
 @font-face {
-	font-family: 'Omicron';
-	src: url(assets/fonts/omicron.ttf) format('truetype');
-}
-
-@font-face {
 	font-family: 'Computer';
 	src: url(assets/fonts/DS-DIGI.ttf) format('truetype');
 }
@@ -18,39 +13,80 @@ body {
 	src: url(assets/fonts/consolas.ttf) format('truetype');
 }
 
+.message {
+	font-family: 'Consolas';
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 75px;
+	text-align: center;
+}
+
 #main {
-	width: 800px;
+	width: 900px;
 	margin: 0 auto;
 	display: flex;
 	flex-direction: column;
 	height: 100vh;
 }
 
-#game-level {
-	display: inline-block;
+#menu {
+	margin-top: 10px;
 }
 
-#mines, #flagged-cells, #timer {
+#game-level {
 	display: inline-block;
+	vertical-align: top;
+	margin: 0 12px 0 0;
+}
+
+#game-level .label {
+	display: block;
+	text-align: center;
+	font-family: 'Consolas', sans serif;
+}
+
+#game-level .value {
+	display: block;
+	margin: 2px 0 0;
+	font-family: 'Consolas', sans serif;
+	font-size: 14px;
+}
+
+#mines, #timer {
+	display: inline-block;
+	width: 60px;
 	margin: 0 0 0 12px;
 }
 
+#flagged-cells {
+	display: inline-block;
+	width: 120px;
+	margin: 0 0 0 12px;
+}
+
+#mines .label, #flagged-cells .label, #timer .label {
+	display: block;
+	text-align: center;
+	font-family: 'Consolas', sans serif;
+}
+
 #mines .value, #flagged-cells .value, #timer .value {
+	display: block;
+	text-align: center;
 	font-family: 'Computer', sans serif;
-	font-size: 70px;
+	font-size: 36px;
 }
 
 #board {
 	flex: 1;
 	display: grid;
-	justify-items: center;
-	align-items: center;
 	justify-content: center;
 	align-content: center;
+	font-family: 'Consolas', sans serif;
 }
 
 #board .covered {
-	z-index: 777777;
 	height: 30px;
 	width: 30px;
 	border: 3px solid;
@@ -67,12 +103,15 @@ body {
 	background-color: #cecab7;
 	border-color: #9c998d;
 	box-sizing: border-box;
+	display: inline-block;
+	text-align: center;
+	padding-top: 3px;
 }
 
 #board .flagged {
-	/*z-index: -777777;*/
 	height: 30px;
 	width: 30px;
+	display: block;
 	border: 3px solid;
 	border-color: #f5f3eb #bab7a9 #bab7a9 #fff9db;
 	box-sizing: border-box;
@@ -80,14 +119,7 @@ body {
 	background-position: center;
 	background-size: contain;
 	background-color: #dcd6bc;
-
-}
-
-.flag {
-	z-index: -5555;
-	object-fit: contain;
-	max-height: 18px;
-	max-width: 22px;
+	background-repeat: no-repeat;
 }
 
 #menu .left-side {
