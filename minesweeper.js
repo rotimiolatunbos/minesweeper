@@ -27,6 +27,7 @@
  		obj.rows = DIMENSIONS[level][0];
 		obj.columns = DIMENSIONS[level][1];
 		obj.mines = NUM_MINES[level];
+		obj.area = obj.rows*obj.columns;
 
 		let indices = [];
 		let mines_found = 0;
