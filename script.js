@@ -7,6 +7,8 @@
 	let timer;
 	let timerId;
 
+	let gameWon = false;
+
 	const COLOR_CODE = {
 		1 : 'blue', 2 : 'green', 3 : 'red', 4 : 'purple', 
 		5 : 'maroon', 6 : 'turquoise', 7 : 'black', 8 : 'gray'
@@ -164,7 +166,7 @@
 	}
 
 	function startTimer() {
-		if (!timerId) {
+		if (!timerId && !gameWon) {
 			timerId = setInterval(updateTimerLabel, 1000);
 		}
 	}
@@ -214,6 +216,8 @@
 	function checkForWin() {
 		if (flaggedCells == minesweeper.mines && 
 			(flaggedCells+revealedCells) == minesweeper.area) {
+			gameWon = true;
+
 			stopTimer();
 			updateMessage('You win! GREAT :)');
 		}	
@@ -224,6 +228,7 @@
 		updateMessage('');
 		minesweeper.newGame(lvl);
 
+		gameWon = false;
 		revealedCells = 0;
 		flaggedCells = 0;
 		timer = 0;
