@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Minesweeper Game</title>
+	<meta charset="utf-8">
+
+	<title>Minesweeper</title>
 
 	<link rel="stylesheet" type="text/css" href="styles.css">
 
@@ -11,6 +13,7 @@
 	<!-- <p>Minesweeper game would go here</p> -->
 
 	<div id="main">
+		<span class="message"></span>
 		<div id="menu">
 
 			<div class="left-side">
@@ -21,33 +24,35 @@
 
 			<div class="right-side">
 				<div id="game-level">
-					<span class="label">level</span><br />
+					<span class="label">level</span>
 
-					<label>
-						<input type="radio" name="gameLevel" value="easy" checked>easy
-					</label>
-				
-					<label>
-						<input type="radio" name="gameLevel" value="medium">medium
-					</label>
+					<div class="value">
+						<label>
+							<input type="radio" name="gameLevel" value="easy" checked>easy
+						</label>
+					
+						<label>
+							<input type="radio" name="gameLevel" value="medium">medium
+						</label>
 
-					<label>
-						<input type="radio" name="gameLevel" value="hard">hard
-					</label>
+						<label>
+							<input type="radio" name="gameLevel" value="hard">hard
+						</label>
+					</div>
 				</div>
 
 				<div id="mines">
-					<span class="label">mines</span><br />
+					<span class="label">mines</span>
 					<span class="value"></span>
 				</div>
 
 				<div id="flagged-cells">
-					<span class="label">flagged cells</span><br />
+					<span class="label">flagged cells</span>
 					<span class="value"></span>
 				</div>
 
 				<div id="timer">
-					<span class="label">time</span><br />
+					<span class="label">time</span>
 					<span class="value"></span>
 				</div>
 			</div>
@@ -55,7 +60,7 @@
 		
 		<div id="board"></div>
 	</div>
-	
+
 	<script type="text/javascript" src="script.js"></script>
 </body>
 </html>
