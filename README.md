@@ -2,7 +2,7 @@
 
 Minesweeper is a game in which you try to clear the game board without revealing the hidden mines through clues from numbers on the board
 
-It is written in javascript
+It is written in HTML, CSS and vanilla javascript
 
 Check it out [here](https://rotimiolatunbos.github.io/minesweeper/)
 
