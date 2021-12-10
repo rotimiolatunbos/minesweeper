@@ -9,7 +9,7 @@ Check it out [here](https://rotimiolatunbos.github.io/minesweeper/)
 
 ## Demo
 
-Image or gif would go here
+![Minesweeper Demo](/demo/minesweeper.gif)
 
 ## Usage
 
